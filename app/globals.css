@@ -1,0 +1,268 @@
+@import "tailwindcss";
+@import "../styles/animations.css";
+
+:root {
+  /* Railway Color Palette — "The Last Departure" */
+  --background: #F5F0E8;
+  --surface: #EDE8DC;
+  --surface-dark: #1C2B4A;
+  --text-primary: #1A1A1A;
+  --text-muted: #6B6355;
+  --track-line: #8B8478;
+  
+  /* Accent Colors */
+  --accent-red: #C0392B;
+  --accent-amber: #D4A017;
+  --accent-teal: #2A7F7F;
+  --accent-orange: #E07B39;
+  
+  /* Legacy aliases for components */
+  --foreground: #1A1A1A;
+  --card: #EDE8DC;
+  --card-foreground: #1A1A1A;
+  --border: #D4A017;
+  --muted: #6B6355;
+  --muted-foreground: #6B6355;
+  --accent-violet: #C0392B;
+  --accent-cyan: #2A7F7F;
+  --radius: 0.625rem;
+}
+
+@theme inline {
+  --font-body: var(--font-dm-serif-text), "DM Serif Text", serif;
+  --font-display: var(--font-playfair-display), "Playfair Display", serif;
+  --font-signage: var(--font-bebas-neue), "Bebas Neue", sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), "IBM Plex Mono", monospace;
+  --font-sans: var(--font-dm-serif-text), "DM Serif Text", serif;
+
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-dark: var(--surface-dark);
+  --color-text-primary: var(--text-primary);
+  --color-text-muted: var(--text-muted);
+  --color-track-line: var(--track-line);
+  --color-accent-red: var(--accent-red);
+  --color-accent-amber: var(--accent-amber);
+  --color-accent-teal: var(--accent-teal);
+  --color-accent-orange: var(--accent-orange);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent-violet: var(--accent-violet);
+  --color-accent-cyan: var(--accent-cyan);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-background font-body;
+    color: var(--text-primary);
+    background: linear-gradient(135deg, #F5F0E8 0%, #EDE8DC 50%, #F0EBDD 100%);
+    min-height: 100vh;
+  }
+  
+  /* Subtle animated fog/steam effect in background */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(212, 160, 23, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(192, 57, 43, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+    animation: steamShift 20s ease-in-out infinite;
+  }
+  
+  .relative {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+/* Typography layers */
+@layer components {
+  .font-display {
+    @apply font-display;
+  }
+  
+  .font-signage {
+    @apply font-signage;
+  }
+  
+  .font-mono-railway {
+    @apply font-mono;
+  }
+}
+
+/* Animations */
+@keyframes float {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(20px);
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes steamShift {
+  0%, 100% {
+    transform: translateX(0) translateY(0);
+  }
+  25% {
+    transform: translateX(20px) translateY(-10px);
+  }
+  50% {
+    transform: translateX(-10px) translateY(15px);
+  }
+  75% {
+    transform: translateX(15px) translateY(5px);
+  }
+}
+
+@keyframes splitFlap {
+  0% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: rotateX(360deg);
+    opacity: 1;
+  }
+}
+
+@keyframes trainMove {
+  0% {
+    left: -20px;
+  }
+  100% {
+    left: calc(100% - 40px);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Platform number watermark utility */
+.platform-watermark {
+  position: absolute;
+  font-size: 200px;
+  font-weight: bold;
+  opacity: 0.04;
+  color: var(--text-primary);
+  pointer-events: none;
+  font-family: var(--font-signage);
+  z-index: 0;
+}
+
+/* Ticket perforation border */
+.ticket-divider {
+  position: relative;
+  border-top: 2px dashed var(--track-line);
+  margin: 2rem 0;
+}
+
+.ticket-divider::before,
+.ticket-divider::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--track-line);
+  top: -7px;
+  left: -6px;
+}
+
+.ticket-divider::after {
+  left: auto;
+  right: -6px;
+}
+
+/* Vintage stamp overlay */
+.vintage-stamp {
+  display: inline-block;
+  border: 2px solid var(--accent-red);
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: bold;
+  color: var(--accent-red);
+  transform: rotate(-15deg);
+  opacity: 0.6;
+  font-family: var(--font-signage);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Railway track styling */
+.railway-track {
+  position: relative;
+  height: 4px;
+  background: linear-gradient(90deg, 
+    var(--surface-dark) 0%, 
+    var(--surface-dark) 20%, 
+    var(--surface) 20%, 
+    var(--surface) 40%, 
+    var(--surface-dark) 40%, 
+    var(--surface-dark) 60%, 
+    var(--surface) 60%, 
+    var(--surface) 80%, 
+    var(--surface-dark) 80%);
+  background-size: 20px 100%;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-amber);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-red);
+}
+
