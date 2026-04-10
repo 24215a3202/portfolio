@@ -6,7 +6,7 @@ const SplitFlapBoard = ({ text, delay = 0 }: { text: string; delay?: number }) =
   const characters = text.split("");
 
   return (
-    <div className="flex gap-1">
+    <div className="flex flex-wrap gap-0.5 md:gap-1">
       {characters.map((char, i) => (
         <motion.div
           key={i}
@@ -23,7 +23,7 @@ const SplitFlapBoard = ({ text, delay = 0 }: { text: string; delay?: number }) =
           }}
           className="inline-block"
         >
-          <span className="font-mono-railway text-lg md:text-2xl font-semibold tracking-wider">
+          <span className="font-mono-railway text-xs sm:text-sm md:text-2xl font-semibold tracking-wider">
             {char === " " ? "\u00A0" : char}
           </span>
         </motion.div>
@@ -48,22 +48,22 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-surface-dark via-surface to-background"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-surface-dark via-surface to-background px-4 md:px-0"
     >
       {/* Platform number watermark */}
-      <div className="platform-watermark" style={{ top: "-50px", left: "-100px" }}>
+      <div className="platform-watermark hidden md:block" style={{ top: "-50px", left: "-100px" }}>
         00
       </div>
 
       {/* Decorative border */}
-      <div className="absolute inset-0 border-8 md:border-16 border-accent-amber opacity-5 pointer-events-none" />
+      <div className="absolute inset-0 border-4 md:border-8 lg:border-16 border-accent-amber opacity-5 pointer-events-none" />
 
       {/* Top tracks */}
       <motion.div
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
         transition={{ delay: 0.1, duration: 1 }}
-        className="absolute top-12 left-12 right-12 h-1 bg-gradient-to-r from-transparent via-accent-amber to-transparent"
+        className="absolute top-6 md:top-12 left-4 md:left-12 right-4 md:right-12 h-1 bg-gradient-to-r from-transparent via-accent-amber to-transparent"
       />
 
       <motion.div
@@ -74,23 +74,23 @@ export function Hero() {
         initial="hidden"
         animate="visible"
         transition={{ staggerChildren: 0.1 }}
-        className="relative z-10 max-w-4xl mx-auto px-6 w-full"
+        className="relative z-10 max-w-4xl mx-auto px-4 md:px-6 w-full"
       >
         {/* Station header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-6 md:mb-12"
         >
-          <div className="flex items-center justify-center gap-4 mb-2">
-            <span className="text-2xl">◈</span>
-            <h1 className="font-display text-5xl md:text-7xl font-bold text-surface-dark dark:text-slate-950">
+          <div className="flex items-center justify-center gap-2 md:gap-4 mb-2">
+            <span className="text-lg md:text-2xl">◈</span>
+            <h1 className="font-display text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-bold text-surface-dark dark:text-slate-950 leading-tight">
               GRAND CENTRAL STATION
             </h1>
-            <span className="text-2xl">◈</span>
+            <span className="text-lg md:text-2xl">◈</span>
           </div>
-          <div className="h-1 bg-accent-amber w-64 mx-auto mt-4" />
+          <div className="h-1 bg-accent-amber w-32 md:w-64 mx-auto mt-4" />
         </motion.div>
 
         {/* Split-flap arrival board */}
@@ -98,24 +98,24 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="bg-surface border-4 md:border-8 border-surface-dark p-8 md:p-12 mb-8 relative"
+          className="bg-surface border-2 md:border-4 lg:border-8 border-surface-dark p-4 sm:p-6 md:p-8 lg:p-12 mb-6 md:mb-8 relative"
           style={{
             boxShadow: "0 20px 60px rgba(28, 43, 74, 0.15)",
           }}
         >
-          <div className="space-y-4 font-mono-railway">
+          <div className="space-y-3 md:space-y-4 font-mono-railway">
             {boardRows.map((row, idx) => (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: row.delay }}
-                className="flex gap-4 md:gap-6"
+                className="flex flex-col sm:flex-row gap-1 sm:gap-4 md:gap-6"
               >
-                <span className="font-signage font-bold text-surface-dark w-32 md:w-48 text-sm md:text-base tracking-wider">
+                <span className="font-signage font-bold text-surface-dark w-full sm:w-28 md:w-48 text-xs md:text-base tracking-wider shrink-0">
                   {row.label}
                 </span>
-                <div className="flex-1 bg-background/50 p-2 md:p-3 border-2 border-dashed border-track-line">
+                <div className="flex-1 bg-background/50 p-1.5 sm:p-2 md:p-3 border-2 border-dashed border-track-line overflow-hidden">
                   <SplitFlapBoard text={row.value} delay={row.delay + 0.1} />
                 </div>
               </motion.div>
@@ -126,38 +126,22 @@ export function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.7 }}
-              className="flex items-center gap-4 md:gap-6 py-4 border-t border-dashed border-track-line"
+              className="flex flex-col items-center gap-4 md:gap-6 py-6 md:py-8 border-t-2 border-dashed border-track-line"
             >
               {/* Label */}
-              <span className="font-signage font-bold text-surface-dark w-32 md:w-48 text-sm md:text-base tracking-wider">
+              <span className="font-signage font-bold text-surface-dark text-xs md:text-base tracking-widest text-center">
                 PASSENGER PHOTO
               </span>
 
-              {/* Vintage Stamp Frame */}
-              <div className="relative flex items-center gap-4">
-                <div style={{ position: "relative", width: "90px", height: "90px" }}>
-                  {/* Outer decorative ring */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      borderRadius: "50%",
-                      border: "3px solid #1C2B4A",
-                      boxShadow: `
-                        0 0 0 2px #F5F0E8,
-                        0 0 0 4px #D4A017,
-                        0 0 0 6px #F5F0E8,
-                        0 0 0 8px #1C2B4A
-                      `,
-                      zIndex: 2,
-                    }}
-                  />
-
+              {/* Centered Photo with Decorative Frame */}
+              <div className="relative flex flex-col items-center gap-4">
+                {/* Photo container */}
+                <div className="relative" style={{ width: "110px", height: "110px" }}>
                   {/* Serrated stamp edge */}
                   <div
+                    className="absolute hidden sm:block"
                     style={{
-                      position: "absolute",
-                      inset: "-8px",
+                      inset: "-10px",
                       borderRadius: "50%",
                       background: `conic-gradient(
                         #1C2B4A 0deg, #1C2B4A 10deg,
@@ -198,64 +182,59 @@ export function Hero() {
                         transparent 350deg, transparent 360deg
                       )`,
                       zIndex: 1,
-                      WebkitMaskImage: "radial-gradient(transparent 65%, black 66%)",
-                      maskImage: "radial-gradient(transparent 65%, black 66%)",
+                      WebkitMaskImage: "radial-gradient(transparent 62%, black 63%)",
+                      maskImage: "radial-gradient(transparent 62%, black 63%)",
                     }}
                   />
 
-                  {/* Photo placeholder */}
+                  {/* Outer decorative ring */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      borderRadius: "50%",
+                      border: "3px solid #1C2B4A",
+                      boxShadow: `
+                        0 0 0 2px #F5F0E8,
+                        0 0 0 4px #D4A017,
+                        0 0 0 6px #F5F0E8,
+                        0 0 0 8px #1C2B4A
+                      `,
+                      zIndex: 2,
+                    }}
+                  />
+
+                  {/* Actual photo */}
                   <motion.div
-                    whileHover={{ scale: 1.15 }}
+                    whileHover={{ scale: 1.08 }}
                     transition={{ duration: 0.3 }}
                     style={{
-                      width: "90px",
-                      height: "90px",
+                      width: "110px",
+                      height: "110px",
                       borderRadius: "50%",
-                      background:
-                        "linear-gradient(135deg, #D4A017 0%, #8B8478 100%)",
+                      background: "linear-gradient(135deg, #D4A017 0%, #8B8478 100%)",
                       position: "relative",
                       zIndex: 3,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: "40px",
+                      overflow: "hidden",
                     }}
                   >
-                    <img src="/portfolio.png" alt="Passenger Photo" className="w-full h-full object-cover rounded-full" />
+                    <img
+                      src="/portfolio.png"
+                      alt="Karthik Matham — Passenger Photo"
+                      className="w-full h-full object-cover rounded-full"
+                    />
                   </motion.div>
                 </div>
 
-                {/* Stamped text beside photo */}
-                <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                  <span
-                    style={{
-                      fontFamily: "IBM Plex Mono",
-                      fontSize: "9px",
-                      color: "#6B6355",
-                      letterSpacing: "0.1em",
-                    }}
-                  >
+                {/* Stamped text below photo */}
+                <div className="flex flex-col items-center gap-1 text-center">
+                  <span className="font-mono text-[9px] md:text-[10px] text-text-muted tracking-widest">
                     ID: KM-2027
                   </span>
-                  <span
-                    style={{
-                      fontFamily: "IBM Plex Mono",
-                      fontSize: "9px",
-                      color: "#C0392B",
-                      letterSpacing: "0.1em",
-                      fontWeight: "bold",
-                    }}
-                  >
+                  <span className="font-mono text-[9px] md:text-[10px] text-accent-red tracking-widest font-bold">
                     ✦ VERIFIED PASSENGER ✦
                   </span>
-                  <span
-                    style={{
-                      fontFamily: "IBM Plex Mono",
-                      fontSize: "9px",
-                      color: "#6B6355",
-                      letterSpacing: "0.1em",
-                    }}
-                  >
+                  <span className="font-mono text-[9px] md:text-[10px] text-text-muted tracking-widest">
                     CLASS OF 2027
                   </span>
                 </div>
@@ -275,7 +254,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2 }}
-          className="flex flex-col md:flex-row gap-6 justify-center"
+          className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center"
         >
           {[
             { text: "View Projects →", href: "#projects" },
@@ -286,7 +265,7 @@ export function Hero() {
               href={btn.href}
               whileHover={{ scale: 1.05, y: -4 }}
               whileTap={{ scale: 0.98 }}
-              className="relative group px-8 py-4 md:px-10 md:py-5 bg-accent-red text-background font-mono-railway font-semibold tracking-wider text-center overflow-hidden"
+              className="relative group px-6 py-3 md:px-10 md:py-5 bg-accent-red text-background font-mono-railway font-semibold tracking-wider text-center text-sm md:text-base overflow-hidden"
               style={{
                 clipPath:
                   "polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))",
@@ -320,14 +299,14 @@ export function Hero() {
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-12 left-12 right-12 h-1 bg-gradient-to-r from-transparent via-accent-amber to-transparent"
+        className="absolute bottom-6 md:bottom-12 left-4 md:left-12 right-4 md:right-12 h-1 bg-gradient-to-r from-transparent via-accent-amber to-transparent"
       />
 
       {/* Locomotive icon (decorative) */}
       <motion.div
         animate={{ x: [0, 10, 0] }}
         transition={{ duration: 3, repeat: Infinity }}
-        className="absolute bottom-20 left-8 text-4xl opacity-20 pointer-events-none"
+        className="absolute bottom-14 md:bottom-20 left-4 md:left-8 text-2xl md:text-4xl opacity-20 pointer-events-none"
       >
         🚂
       </motion.div>

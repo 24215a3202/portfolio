@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Github } from "lucide-react";
+import { Github, Menu, X } from "lucide-react";
 import { useScrollProgress } from "@/hooks/use-scroll-progress";
 
 const stations = [
@@ -17,6 +17,7 @@ const stations = [
 export function Navbar() {
   const [visible, setVisible] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
+  const [mobileOpen, setMobileOpen] = useState(false);
   const scrollProgress = useScrollProgress();
 
   useEffect(() => {
@@ -44,6 +45,7 @@ export function Navbar() {
   }, []);
 
   const locomotivePosition = Math.min(scrollProgress * 100, 100);
+  const activeStation = stations.find((s) => s.id === activeSection);
 
   return (
     <AnimatePresence>
@@ -53,18 +55,83 @@ export function Navbar() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3 }}
-          className="fixed top-6 left-1/2 z-50 -translate-x-1/2 w-full max-w-6xl px-6"
+          className="fixed top-4 md:top-6 left-1/2 z-50 -translate-x-1/2 w-[calc(100%-2rem)] md:w-full max-w-6xl md:px-6"
         >
           <div className="bg-surface border-2 border-surface-dark p-3 md:p-4 backdrop-blur">
             {/* Station header */}
-            <div className="text-center mb-2">
+            <div className="text-center mb-2 hidden md:block">
               <p className="font-signage text-xs text-surface-dark tracking-widest">
                 ▬▬▬ RAILWAY ROUTE MAP ▬▬▬
               </p>
             </div>
 
-            {/* Track with locomotive */}
-            <div className="relative mb-4">
+            {/* Mobile: compact header with hamburger */}
+            <div className="flex items-center justify-between md:hidden">
+              <p className="font-signage text-[10px] text-surface-dark tracking-widest">
+                RAILWAY ROUTE MAP
+              </p>
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-[10px] text-accent-red font-semibold">
+                  {activeStation?.number} — {activeStation?.label}
+                </span>
+                <button
+                  onClick={() => setMobileOpen(!mobileOpen)}
+                  className="p-1 text-surface-dark hover:text-accent-red transition-colors"
+                  aria-label="Toggle navigation menu"
+                >
+                  {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                </button>
+              </div>
+            </div>
+
+            {/* Mobile dropdown menu */}
+            <AnimatePresence>
+              {mobileOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="overflow-hidden md:hidden mt-3"
+                >
+                  <div className="grid grid-cols-3 gap-2 pb-3">
+                    {stations.map((station) => (
+                      <a
+                        key={station.id}
+                        href={`#${station.id}`}
+                        onClick={() => setMobileOpen(false)}
+                        className={`text-center p-2 border border-track-line transition-all ${
+                          activeSection === station.id
+                            ? "bg-accent-red text-background border-accent-red"
+                            : "text-text-muted hover:text-text-primary hover:border-surface-dark"
+                        }`}
+                      >
+                        <div className="font-signage text-xs tracking-wider">
+                          {station.number}
+                        </div>
+                        <div className="font-mono text-[9px] uppercase opacity-75">
+                          {station.label}
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                  <div className="flex justify-center pt-2 border-t border-dashed border-track-line">
+                    <a
+                      href="https://github.com/24215a3202"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-surface-dark hover:text-accent-red transition-colors"
+                      aria-label="GitHub Profile"
+                    >
+                      <Github className="h-4 w-4" />
+                    </a>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Desktop: Track with locomotive */}
+            <div className="relative mb-4 hidden md:block">
               <style>{`
                 @keyframes steamRise {
                   0% { transform: translateY(0) scale(1); opacity: 0.7; }
@@ -154,9 +221,9 @@ export function Navbar() {
               </svg>
             </div>
 
-            {/* Station labels */}
-            <div className="flex justify-between px-2 mb-3 gap-1">
-              {stations.map((station, i) => (
+            {/* Desktop: Station labels */}
+            <div className="hidden md:flex justify-between px-2 mb-3 gap-1">
+              {stations.map((station) => (
                 <a
                   key={station.id}
                   href={`#${station.id}`}
@@ -180,8 +247,8 @@ export function Navbar() {
               ))}
             </div>
 
-            {/* Social link */}
-            <div className="flex justify-center">
+            {/* Desktop: Social link */}
+            <div className="hidden md:flex justify-center">
               <a
                 href="https://github.com/24215a3202"
                 target="_blank"

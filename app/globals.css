@@ -68,6 +68,7 @@
   
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
   
   body {
@@ -75,6 +76,7 @@
     color: var(--text-primary);
     background: linear-gradient(135deg, #F5F0E8 0%, #EDE8DC 50%, #F0EBDD 100%);
     min-height: 100vh;
+    overflow-x: hidden;
   }
   
   /* Subtle animated fog/steam effect in background */
@@ -264,5 +266,11 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-red);
+}
+
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
 }
 

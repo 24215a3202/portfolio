@@ -50,37 +50,37 @@ const cardVariants = {
 
 export function Now() {
   return (
-    <section id="now" className="relative py-24 md:py-32 bg-background">
+    <section id="now" className="relative py-16 md:py-24 lg:py-32 bg-background overflow-hidden">
       {/* Platform number watermark */}
       <div
-        className="platform-watermark"
+        className="platform-watermark hidden md:block"
         style={{ bottom: "200px", left: "-50px" }}
       >
         05
       </div>
 
-      <div className="mx-auto max-w-5xl px-6 relative z-10">
+      <div className="mx-auto max-w-5xl px-4 md:px-6 relative z-10">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="mb-12 text-center"
+          className="mb-8 md:mb-12 text-center"
         >
           <p className="font-signage text-xs md:text-sm uppercase tracking-widest text-accent-red mb-4">
             Platform 05
           </p>
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-surface-dark mb-3">
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-surface-dark mb-3">
             Active Platforms
           </h2>
-          <p className="font-body text-text-muted text-lg">
+          <p className="font-body text-text-muted text-base md:text-lg">
             Current Service — What I'm Building Now
           </p>
         </motion.div>
 
         {/* Building Cards Grid with Railway Tracks */}
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-4 md:gap-8 sm:grid-cols-2 md:grid-cols-3">
           {buildingCards.map((card, i) => (
             <motion.div
               key={card.title}
@@ -89,42 +89,42 @@ export function Now() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true }}
-              className="flex h-full flex-col bg-surface border-4 border-surface-dark p-6 md:p-8 relative"
+              className="flex h-full flex-col bg-surface border-2 md:border-4 border-surface-dark p-4 sm:p-5 md:p-6 lg:p-8 relative"
             >
               {/* Status indicator */}
-              <div className="flex items-center gap-3 mb-4 pb-4 border-b-2 border-dashed border-track-line">
-                <span className="text-2xl">{card.statusEmoji}</span>
-                <span className="font-mono-railway text-xs uppercase font-semibold text-surface-dark tracking-widest">
+              <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4 pb-3 md:pb-4 border-b-2 border-dashed border-track-line">
+                <span className="text-lg md:text-2xl">{card.statusEmoji}</span>
+                <span className="font-mono-railway text-[10px] md:text-xs uppercase font-semibold text-surface-dark tracking-widest">
                   {card.status}
                 </span>
               </div>
 
               {/* Title */}
-              <h3 className="font-display text-2xl font-bold text-surface-dark mb-3">
+              <h3 className="font-display text-lg md:text-xl lg:text-2xl font-bold text-surface-dark mb-2 md:mb-3">
                 {card.title}
               </h3>
 
               {/* Description */}
-              <p className="mb-6 flex-grow font-body text-sm leading-relaxed text-text-primary">
+              <p className="mb-4 md:mb-6 flex-grow font-body text-xs md:text-sm leading-relaxed text-text-primary">
                 {card.description}
               </p>
 
               {/* Railway Track Progress Bar */}
-              <div className="mb-6">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="font-mono-railway text-xs uppercase font-semibold text-text-muted tracking-wider">
+              <div className="mb-4 md:mb-6">
+                <div className="flex items-center justify-between mb-2 md:mb-3">
+                  <span className="font-mono-railway text-[10px] md:text-xs uppercase font-semibold text-text-muted tracking-wider">
                     Progress
                   </span>
-                  <span className="font-mono-railway text-xs uppercase font-semibold text-accent-amber">
+                  <span className="font-mono-railway text-[10px] md:text-xs uppercase font-semibold text-accent-amber">
                     {card.progress}%
                   </span>
                 </div>
 
                 {/* Track visualization */}
-                <div className="relative h-6 bg-background border-2 border-track-line overflow-hidden">
+                <div className="relative h-5 md:h-6 bg-background border-2 border-track-line overflow-hidden">
                   {/* Unfilled dashed track */}
                   <div className="absolute inset-0 flex items-center px-2">
-                    <span className="text-xs text-track-line opacity-40">
+                    <span className="text-[10px] md:text-xs text-track-line opacity-40">
                       ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
                     </span>
                   </div>
@@ -140,7 +140,7 @@ export function Now() {
                       width: `${card.progress}%`,
                     }}
                   >
-                    <div className="absolute right-0 text-xs leading-none transform translate-x-2">
+                    <div className="absolute right-0 text-[10px] md:text-xs leading-none transform translate-x-2">
                       🚂
                     </div>
                   </motion.div>
@@ -148,11 +148,11 @@ export function Now() {
               </div>
 
               {/* Tech Tags */}
-              <div className="flex flex-wrap gap-2 pt-4 border-t-2 border-dashed border-track-line">
+              <div className="flex flex-wrap gap-1.5 md:gap-2 pt-3 md:pt-4 border-t-2 border-dashed border-track-line">
                 {card.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="text-xs font-mono-railway px-2 py-1 border border-track-line text-surface-dark bg-background/50 uppercase tracking-wider"
+                    className="text-[10px] md:text-xs font-mono-railway px-1.5 md:px-2 py-0.5 md:py-1 border border-track-line text-surface-dark bg-background/50 uppercase tracking-wider"
                   >
                     {tag}
                   </span>
@@ -160,10 +160,10 @@ export function Now() {
               </div>
 
               {/* Decorative corners */}
-              <div className="absolute top-2 left-2 w-2 h-2 border-t-2 border-l-2 border-accent-red opacity-40" />
-              <div className="absolute top-2 right-2 w-2 h-2 border-t-2 border-r-2 border-accent-red opacity-40" />
-              <div className="absolute bottom-2 left-2 w-2 h-2 border-b-2 border-l-2 border-accent-red opacity-40" />
-              <div className="absolute bottom-2 right-2 w-2 h-2 border-b-2 border-r-2 border-accent-red opacity-40" />
+              <div className="absolute top-1 md:top-2 left-1 md:left-2 w-2 h-2 border-t-2 border-l-2 border-accent-red opacity-40" />
+              <div className="absolute top-1 md:top-2 right-1 md:right-2 w-2 h-2 border-t-2 border-r-2 border-accent-red opacity-40" />
+              <div className="absolute bottom-1 md:bottom-2 left-1 md:left-2 w-2 h-2 border-b-2 border-l-2 border-accent-red opacity-40" />
+              <div className="absolute bottom-1 md:bottom-2 right-1 md:right-2 w-2 h-2 border-b-2 border-r-2 border-accent-red opacity-40" />
             </motion.div>
           ))}
         </div>
@@ -174,16 +174,16 @@ export function Now() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
           viewport={{ once: true }}
-          className="mt-10 bg-surface border-4 border-surface-dark p-6 md:p-8 relative"
+          className="mt-6 md:mt-10 bg-surface border-2 md:border-4 border-surface-dark p-4 sm:p-6 md:p-8 relative"
         >
           {/* Divider */}
-          <div className="border-b-2 border-dashed border-track-line pb-4 mb-6">
-            <p className="font-signage text-xs uppercase tracking-widest text-surface-dark">
+          <div className="border-b-2 border-dashed border-track-line pb-3 md:pb-4 mb-4 md:mb-6">
+            <p className="font-signage text-[10px] md:text-xs uppercase tracking-widest text-surface-dark">
               ◈ OPERATIONAL STATUS ◈
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {statusItems.map((item, i) => (
               <motion.div
                 key={i}
@@ -196,11 +196,11 @@ export function Now() {
                 viewport={{ once: true }}
                 className="text-center"
               >
-                <div className="text-3xl mb-2">{item.emoji}</div>
-                <p className="font-mono-railway text-xs text-text-muted uppercase tracking-wider">
+                <div className="text-2xl md:text-3xl mb-1 md:mb-2">{item.emoji}</div>
+                <p className="font-mono-railway text-[9px] md:text-xs text-text-muted uppercase tracking-wider">
                   {item.text}
                 </p>
-                <p className="font-signage text-sm font-bold text-accent-red mt-1">
+                <p className="font-signage text-xs md:text-sm font-bold text-accent-red mt-1">
                   {item.highlight}
                 </p>
               </motion.div>
@@ -208,10 +208,10 @@ export function Now() {
           </div>
 
           {/* Decorative corners */}
-          <div className="absolute top-3 left-3 w-2 h-2 border-t-2 border-l-2 border-accent-red opacity-40" />
-          <div className="absolute top-3 right-3 w-2 h-2 border-t-2 border-r-2 border-accent-red opacity-40" />
-          <div className="absolute bottom-3 left-3 w-2 h-2 border-b-2 border-l-2 border-accent-red opacity-40" />
-          <div className="absolute bottom-3 right-3 w-2 h-2 border-b-2 border-r-2 border-accent-red opacity-40" />
+          <div className="absolute top-2 md:top-3 left-2 md:left-3 w-2 h-2 border-t-2 border-l-2 border-accent-red opacity-40" />
+          <div className="absolute top-2 md:top-3 right-2 md:right-3 w-2 h-2 border-t-2 border-r-2 border-accent-red opacity-40" />
+          <div className="absolute bottom-2 md:bottom-3 left-2 md:left-3 w-2 h-2 border-b-2 border-l-2 border-accent-red opacity-40" />
+          <div className="absolute bottom-2 md:bottom-3 right-2 md:right-3 w-2 h-2 border-b-2 border-r-2 border-accent-red opacity-40" />
         </motion.div>
       </div>
     </section>
